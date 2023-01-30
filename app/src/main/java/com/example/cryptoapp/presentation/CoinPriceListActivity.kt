@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.cryptoapp.R
 import com.example.cryptoapp.presentation.adapters.CoinInfoAdapter
-import com.example.cryptoapp.data.models.CoinInfoDTO
+import com.example.cryptoapp.data.network.models.CoinInfoDTO
 import kotlinx.android.synthetic.main.activity_coin_prce_list.*
 
 class CoinPriceListActivity : AppCompatActivity() {

@@ -6,8 +6,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.example.cryptoapp.data.network.ApiFactory
 import com.example.cryptoapp.data.database.AppDatabase
-import com.example.cryptoapp.data.models.CoinInfoDTO
-import com.example.cryptoapp.data.models.CoinJsonContainerDTO
+import com.example.cryptoapp.data.network.models.CoinInfoDTO
+import com.example.cryptoapp.data.network.models.CoinJsonContainerDTO
 import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
