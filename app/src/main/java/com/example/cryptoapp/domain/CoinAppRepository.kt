@@ -8,5 +8,5 @@ interface CoinAppRepository {
 
     fun getCoinDetailInfo(fromSymbol: String): LiveData<CoinInfoEntity>
 
-    suspend fun loadData()
+    fun loadData()
 }
