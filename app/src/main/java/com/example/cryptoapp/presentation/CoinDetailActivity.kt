@@ -4,41 +4,27 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.cryptoapp.databinding.ActivityCoinDetailBinding
-import com.squareup.picasso.Picasso
+import androidx.fragment.app.Fragment
+import com.example.cryptoapp.R
 
 class CoinDetailActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: CoinViewModel
-
-    private val binding by lazy {
-        ActivityCoinDetailBinding.inflate(layoutInflater)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
-        if (!intent.hasExtra(EXTRA_FROM_SYMBOL)) {
-            finish()
-            return
+        setContentView(R.layout.activity_coin_detail)
+        if (savedInstanceState == null) {
+            val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: EMPTY_SYMBOL
+            val fragment = CoinDetailFragment.newInstanceCoinDetail(fromSymbol)
+            launchFragment(fragment)
         }
-        val fromSymbol = intent.getStringExtra(EXTRA_FROM_SYMBOL) ?: EMPTY_SYMBOL
-        viewModel = ViewModelProvider(this)[CoinViewModel::class.java]
-        viewModel.getDetailInfo(fromSymbol).observe(this, Observer {
-            with(binding) {
-                tvPrice.text = it.price
-                tvMinPrice.text = it.minPrice
-                tvMaxPrice.text = it.maxPrice
-                tvLastMarket.text = it.lastMarket
-                tvLastUpdate.text = it.lastUpdate
-                tvFromSymbol.text = it.fromSymbol
-                tvToSymbol.text = it.toSymbol
-                Picasso.get().load(it.imageUrl).into(ivLogoCoin)
-            }
 
-        })
+    }
+
+    private fun launchFragment(fragment: Fragment) {
+        supportFragmentManager.popBackStack()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.container_for_coinFragmentVertical, fragment).commit()
     }
 
     companion object {

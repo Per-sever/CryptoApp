@@ -8,6 +8,7 @@ import com.example.cryptoapp.data.mappers.CoinMapper
 import com.example.cryptoapp.data.network.ApiFactory
 import com.example.cryptoapp.domain.CoinAppRepository
 import com.example.cryptoapp.domain.CoinInfoEntity
+import kotlinx.coroutines.delay
 
 class CoinAppRepositoryImpl(application: Application) : CoinAppRepository {
 
@@ -35,6 +36,7 @@ class CoinAppRepositoryImpl(application: Application) : CoinAppRepository {
             val coinInfoDTOList = mapper.mapJsonContainerToListCoinInfo(coinInfoList)
             val coinInfoDbModelList = mapper.mapListDtoModelToListDbModel(coinInfoDTOList)
             coinListDao.insertPriceList(coinInfoDbModelList)
+            delay(10000)
         }
     }
 }
