@@ -7,5 +7,6 @@ data class CoinInfoEntity(
     val minPrice: String?,
     val maxPrice: String?,
     val lastMarket: String?,
-    val lastUpdate: Long?
+    val lastUpdate: String?,
+    val imageUrl: String?
 )

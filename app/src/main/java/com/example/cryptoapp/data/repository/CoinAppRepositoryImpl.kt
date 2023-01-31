@@ -27,7 +27,7 @@ class CoinAppRepositoryImpl(application: Application) : CoinAppRepository {
         }
     }
 
-    override fun loadData() {
+    override suspend fun loadData() {
         while (true) {
             val topCoinsInfo = ApiFactory.apiService.getTopCoinsInfo(limit = 50)
             val topCoinsNamesString = mapper.mapCoinListOfDataDTOToString(topCoinsInfo)

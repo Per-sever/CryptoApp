@@ -6,6 +6,9 @@ import com.example.cryptoapp.data.network.models.CoinInfoListOfDataDTO
 import com.example.cryptoapp.data.network.models.CoinJsonContainerDTO
 import com.example.cryptoapp.domain.CoinInfoEntity
 import com.google.gson.Gson
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CoinMapper {
     fun mapDbModelToEntity(coinInfoDbModel: CoinInfoDbModel): CoinInfoEntity {
@@ -16,7 +19,9 @@ class CoinMapper {
             minPrice = coinInfoDbModel.minPrice,
             maxPrice = coinInfoDbModel.maxPrice,
             lastMarket = coinInfoDbModel.lastMarket,
-            lastUpdate = coinInfoDbModel.lastUpdate
+            lastUpdate = convertTimestampToTime(coinInfoDbModel.lastUpdate),
+            imageUrl = coinInfoDbModel.imageUrl
+
         )
     }
 
@@ -29,7 +34,8 @@ class CoinMapper {
             minPrice = coinInfoDTO.lowDay,
             maxPrice = coinInfoDTO.highDay,
             lastMarket = coinInfoDTO.lastMarket,
-            lastUpdate = coinInfoDTO.lastUpdate
+            lastUpdate = coinInfoDTO.lastUpdate,
+            imageUrl = BASE_IMAGE_URL + coinInfoDTO.imageUrl
         )
     }
 
@@ -41,7 +47,7 @@ class CoinMapper {
     fun mapCoinListOfDataDTOToString(coinListOfData: CoinInfoListOfDataDTO): String {
         return coinListOfData.coinNameList?.map {
             it.coinNameDTO?.name
-        }?.joinToString(",") ?: ""
+        }?.joinToString(",") ?: EMPTY_SYMBOL
     }
 
     fun mapListDtoModelToListDbModel(coinInfoListDTO: List<CoinInfoDTO>): List<CoinInfoDbModel> {
@@ -64,5 +70,21 @@ class CoinMapper {
             }
         }
         return result
+    }
+
+    private fun convertTimestampToTime(timestamp: Long?): String {
+        if (timestamp == null) return ""
+        val stamp = Timestamp(timestamp * 1000)
+        val date = Date(stamp.time)
+        val pattern = "HH:mm:ss"
+        val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+        sdf.timeZone = TimeZone.getDefault()
+        return sdf.format(date)
+    }
+
+    companion object {
+        private const val EMPTY_SYMBOL = ""
+        private const val BASE_IMAGE_URL = "https://cryptocompare.com"
+
     }
 }
