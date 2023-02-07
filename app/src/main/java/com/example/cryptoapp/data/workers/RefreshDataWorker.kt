@@ -13,7 +13,7 @@ import kotlinx.coroutines.delay
 class RefreshDataWorker(context: Context, workerParameters: WorkerParameters) :
     CoroutineWorker(context, workerParameters) {
     private val mapper = CoinMapper()
-    private val coinListDao = AppDatabase.getInstance(context).coinPriceInfoDao()
+    private val coinListDao = AppDatabase.getInstance(context).coinInfoDao()
     override suspend fun doWork(): Result {
         while (true) {
             try {
